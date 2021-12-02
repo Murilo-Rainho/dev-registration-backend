@@ -1,4 +1,4 @@
-import { getAllDevs as modelGetAllDevs } from "../model/devs.js";
+import { getAllLevels as modelGetAllLevels } from "../model/levels.js";
 
 import validateGetAllDevsOrLevels from "../schemas/validateGetAllDevsOrLevels.js";
 
@@ -12,8 +12,8 @@ import validateGetAllDevsOrLevels from "../schemas/validateGetAllDevsOrLevels.js
 // ERROR: Return an object with a key 'status' with the status code
 // and a key 'message' with any description of error.
 
-export const getAllDevs = async () => {
-  const resultOfQueryWithAllDevs = await modelGetAllDevs();
+export const getAllLevels = async () => {
+  const resultOfQueryWithAllDevs = await modelGetAllLevels();
 
   const objectErrorOrNo = validateGetAllDevsOrLevels(resultOfQueryWithAllDevs);
   if (objectErrorOrNo.message) return objectErrorOrNo;
