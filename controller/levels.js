@@ -1,6 +1,7 @@
 import {
   getAllLevels as servicesGetAllLevels,
   createLevel as servicesCreateLevel,
+  deleteLevel as servicesDeleteLevel,
 } from "../services/levels.js";
 
 // GET METHODS
@@ -35,4 +36,15 @@ export const createLevel = async (req, res, _next) => {
   if (message) return res.status(status).json({ message }).end();
 
   res.status(status).json({ inserted, response });
+};
+
+export const deleteLevel = async (req, res, _next) => {
+  const { id: levelId } = req.params;
+
+  const resultOfQueryOfDeleteALevel = await servicesDeleteLevel(levelId);
+
+  const { status, message } = resultOfQueryOfDeleteALevel;
+  if (message) return res.status(status).send({ message });
+
+  res.status(204).send({ message: 'Level has been removed.' });
 };

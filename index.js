@@ -3,7 +3,7 @@ import express from 'express';
 import { config as dotenvConfig } from 'dotenv';
 
 import { getAllDevs, createDev, deleteDev } from './controller/devs.js';
-import { getAllLevels, createLevel } from './controller/levels.js';
+import { getAllLevels, createLevel, deleteLevel } from './controller/levels.js';
 
 dotenvConfig();
 
@@ -20,6 +20,7 @@ app.post('/dev', createDev)
 app.post('/level', createLevel);
 
 app.delete('/dev/:id', deleteDev);
+app.delete('/level/:id', deleteLevel);
 
 app.listen(PORT, () => {
   console.log(`Backend rodando na porta ${PORT}`);
