@@ -1,10 +1,15 @@
 import connection from "./connection.js";
 
 export const getAllDevs = async () => {
-  console.log('testando');
-  const resultOfQueryWithAllDevs = await connection.execute(`
-    SELECT * FROM devs;
-  `);
-  console.log('query', resultOfQueryWithAllDevs);
-  return resultOfQueryWithAllDevs;
+  try {
+    const [resultOfQueryWithAllDevs] = await connection.execute(`
+      SELECT * ROM dev_registration.devs;
+    `);
+    return resultOfQueryWithAllDevs;
+  } catch ({ sqlMessage, errno }) {
+    return [{
+      code: errno,
+      message: sqlMessage,
+    }];
+  }
 };
