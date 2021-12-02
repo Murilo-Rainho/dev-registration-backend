@@ -30,3 +30,26 @@ export const createDev = async (objInfoForInsertADev) => {
     };
   }
 };
+
+export const deleteDev = async (devId) => {
+  try {
+    const [resultOfQuery] = await connection.execute(`
+      DELETE FROM dev_registration.devs
+      WHERE id = ?;
+    `, [devId]);
+
+    if (resultOfQuery.affectedRows === 0) {
+      return {
+        status: 400,
+        message: 'Has no dev with this Id to be removed.',
+      };
+    }
+
+    return resultOfQuery;
+  } catch ({ sqlMessage, errno }) {
+    return {
+      status: errno,
+      message: sqlMessage,
+    };
+  }
+};

@@ -1,6 +1,7 @@
 import {
   getAllDevs as servicesGetAllDevs,
   createDev as servicesCreateDev,
+  deleteDev as servicesDeleteDev,
 } from "../services/devs.js";
 
 // The default return from services is:
@@ -30,4 +31,15 @@ export const createDev = async (req, res, _next) => {
   if (message) return res.status(status).json({ message }).end();
 
   res.status(status).json({ inserted, response });
+};
+
+export const deleteDev = async (req, res, _next) => {
+  const { id: devId } = req.params;
+
+  const resultOfQueryOfDeleteADev = await servicesDeleteDev(devId);
+
+  const { status, message } = resultOfQueryOfDeleteADev;
+  if (message) return res.status(status).send({ message });
+
+  res.status(204).send({ message: 'Dev has been removed.' });
 };
