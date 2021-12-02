@@ -1,6 +1,10 @@
-import { getAllDevs as modelGetAllDevs } from "../model/devs.js";
+import {
+  getAllDevs as modelGetAllDevs,
+  createDev as modelCreateDev,
+} from "../model/devs.js";
 
 import validateGetAllDevsOrLevels from "../schemas/validateGetAllDevsOrLevels.js";
+import validateInsertDevOrLevel from "../schemas/validateInsertDevOrLevel.js";
 
 // The default return from validation functions is:
 // OK: Return an empty object;
@@ -21,5 +25,18 @@ export const getAllDevs = async () => {
   return {
     results: resultOfQueryWithAllDevs,
     status: 200,
+  };
+};
+
+export const createDev = async (objInfoForInsertADev) => {
+  const resultOfQueryOfCreateADev = await modelCreateDev(objInfoForInsertADev);
+
+  const objectErrorOrNo = validateInsertDevOrLevel(resultOfQueryOfCreateADev);
+  if (objectErrorOrNo.message) return objectErrorOrNo;
+
+  return {
+    inserted: { id: resultOfQueryOfCreateADev.insertId, ...resultOfQueryOfCreateADev },
+    response: resultOfQueryOfCreateADev,
+    status: 201,
   };
 };

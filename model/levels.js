@@ -18,7 +18,7 @@ export const createLevel = async (levelName) => {
   try {
     const [resultOfQuery] = await connection.execute(`
       INSERT INTO dev_registration.levels
-      (level) VALUES (?);
+      (\`level\`) VALUES (?);
     `, [levelName]);
     return resultOfQuery;
   } catch ({ sqlMessage, errno }) {
