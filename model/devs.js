@@ -41,10 +41,36 @@ export const deleteDev = async (devId) => {
     if (resultOfQuery.affectedRows === 0) {
       return {
         status: 400,
-        message: 'Has no dev with this Id to be removed.',
+        message: 'Has no dev with this Id to be remove.',
       };
     }
 
+    return resultOfQuery;
+  } catch ({ sqlMessage, errno }) {
+    return {
+      status: errno,
+      message: sqlMessage,
+    };
+  }
+};
+
+export const updateDev = async (devId, objInfoForUpdateADev) => {
+  try {
+    const { level, name, gender, birthday_date, age, hobby } = objInfoForUpdateADev;
+    
+    const [resultOfQuery] = await connection.execute(`
+      UPDATE dev_registration.devs
+      SET level = ?, \`name\` = ?, gender = ?,
+      birthday_date = ?, age = ?, hobby = ?
+      WHERE id = ?;
+    `, [level, name, gender, birthday_date, age, hobby, devId]);
+  
+    if (resultOfQuery.affectedRows === 0) {
+      return {
+        status: 400,
+        message: 'Has no dev with this Id to be update.',
+      };
+    }
     return resultOfQuery;
   } catch ({ sqlMessage, errno }) {
     return {
