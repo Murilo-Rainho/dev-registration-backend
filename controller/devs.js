@@ -1,6 +1,6 @@
-import { getAllDevs as servicesGetAllDevs } from "../services/devs";
+import { getAllDevs as servicesGetAllDevs } from "../services/devs.js";
 
-export const getAllDevs = async () => {
+export const getAllDevs = async (_req, res, _next) => {
   const resultOfQueryWithAllDevs = await servicesGetAllDevs();
-  return resultOfQueryWithAllDevs;
+  res.status(200).json(resultOfQueryWithAllDevs);
 };

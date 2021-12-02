@@ -2,7 +2,7 @@ import express from 'express';
 
 import { config as dotenvConfig } from 'dotenv';
 
-import { getAllDevs } from './controller/devs';
+import { getAllDevs } from './controller/devs.js';
 
 dotenvConfig();
 

@@ -1,4 +1,4 @@
-import { getAllDevs as modelGetAllDevs } from "../model/devs";
+import { getAllDevs as modelGetAllDevs } from "../model/devs.js";
 
 export const getAllDevs = async () => {
   const resultOfQueryWithAllDevs = await modelGetAllDevs();
