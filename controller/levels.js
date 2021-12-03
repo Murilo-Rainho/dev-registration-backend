@@ -22,15 +22,16 @@ import {
 // and a key 'message' with any description of error.
 
 export const getLevels = async (req, res, _next) => {
-  const { level } = req.query;
+  const { level, limit = 10, offset = 0 } = req.query;
 
   const resultOfQueryWithAllDevs = (level) ? 
-    await servicesGetLevelByName(level):  await servicesGetAllLevels();
+    await servicesGetLevelByName(level) :
+    await servicesGetAllLevels({ limit, offset });
 
-  const { status, message, results } = resultOfQueryWithAllDevs;
+  const { status, message, ...response } = resultOfQueryWithAllDevs;
   if (message) return res.status(status).json({ message }).end();
 
-  res.status(status).json({ results });
+  res.status(status).json({ ...response });
 };
 
 export const createLevel = async (req, res, _next) => {

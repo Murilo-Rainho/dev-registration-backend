@@ -1,10 +1,11 @@
 import connection from "./connection.js";
 
-export const getAllLevels = async () => {
+export const getAllLevels = async ({ limit, offset }) => {
   try {
     const [resultOfQueryWithAllLevels] = await connection.execute(`
-      SELECT * FROM dev_registration.levels;
-    `);
+      SELECT * FROM dev_registration.levels
+      LIMIT ? OFFSET ?;
+    `, [parseInt(limit), parseInt(offset)]);
 
     if (resultOfQueryWithAllLevels.length === 0) {
       return {
@@ -108,3 +109,18 @@ export const updateLevel = async (levelId, objInfoForUpdateALevel) => {
     };
   }
 };
+
+export const howManyLevelsAreThere = async () => {
+  try {
+    const [resultOfQuery] = await connection.execute(`
+      SELECT COUNT(*) AS total FROM dev_registration.levels;
+    `);
+
+    return resultOfQuery;
+  } catch ({ sqlMessage, errno }) {
+    return {
+      status: errno,
+      message: sqlMessage,
+    };
+  }
+}

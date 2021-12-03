@@ -1,4 +1,5 @@
 import { howManyDevsAreThere } from '../model/devs.js';
+import { howManyLevelsAreThere } from '../model/levels.js';
 
 import { config as dotenvConfig } from 'dotenv';
 import path, { dirname } from 'path';
@@ -14,7 +15,9 @@ const getPreviousAndNextPages = async ({ limit, offset }, devOrLevelPath, queryS
   let previousPage;
   let nextPage;
 
-  const [{ total }] = await howManyDevsAreThere();
+  const [{ total }] = (devOrLevelPath === 'dev') ?
+    await howManyDevsAreThere() :
+    await howManyLevelsAreThere();
 
   if (offset + limit >= total) {
     nextPage = false;
