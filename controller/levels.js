@@ -1,5 +1,6 @@
 import {
   getAllLevels as servicesGetAllLevels,
+  getLevelByName as servicesGetLevelByName,
   createLevel as servicesCreateLevel,
   deleteLevel as servicesDeleteLevel,
   updateLevel as servicesUpdateLevel,
@@ -20,8 +21,11 @@ import {
 // ERROR: Return an object with a key 'status' with the status code
 // and a key 'message' with any description of error.
 
-export const getAllLevels = async (_req, res, _next) => {
-  const resultOfQueryWithAllDevs = await servicesGetAllLevels();
+export const getLevels = async (req, res, _next) => {
+  const { level } = req.query;
+
+  const resultOfQueryWithAllDevs = (level) ? 
+    await servicesGetLevelByName(level):  await servicesGetAllLevels();
 
   const { status, message, results } = resultOfQueryWithAllDevs;
   if (message) return res.status(status).json({ message }).end();

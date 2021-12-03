@@ -1,5 +1,6 @@
 import {
   getAllLevels as modelGetAllLevels,
+  getLevelByName as modelGetLevelByName,
   createLevel as modelCreateLevel,
   deleteLevel as modelDeleteLevel,
   updateLevel as modelUpdateLevel,
@@ -32,6 +33,18 @@ export const getAllLevels = async () => {
     status: 200,
   };
 };
+
+export const getLevelByName = async (queryStringLevelName) => {
+  const resultOfQueryWithLevel = await modelGetLevelByName(queryStringLevelName);
+
+  const objectErrorOrNo = validateGetDevsOrLevels(resultOfQueryWithLevel);
+  if (objectErrorOrNo.message) return objectErrorOrNo;
+
+  return {
+    results: resultOfQueryWithLevel,
+    status: 200,
+  };
+}
 
 export const createLevel = async (levelName) => {
   const resultOfQueryOfCreateALevel = await modelCreateLevel(levelName);

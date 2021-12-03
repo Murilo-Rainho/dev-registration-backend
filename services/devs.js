@@ -1,9 +1,9 @@
 import {
   getAllDevs as modelGetAllDevs,
+  getDevByName as modelGetDevByName,
   createDev as modelCreateDev,
   deleteDev as modelDeleteDev,
   updateDev as modelUpdateDev,
-  getDevByName as modelGetDevByName,
 } from "../model/devs.js";
 
 import validateGetDevsOrLevels from "../schemas/validateGetDevsOrLevels.js";
@@ -33,8 +33,8 @@ export const getAllDevs = async () => {
   };
 };
 
-export const getDevByName = async (name) => {
-  const resultOfQueryWithDev = await modelGetDevByName(name);
+export const getDevByName = async (queryStringDevName) => {
+  const resultOfQueryWithDev = await modelGetDevByName(queryStringDevName);
 
   const objectErrorOrNo = validateGetDevsOrLevels(resultOfQueryWithDev);
   if (objectErrorOrNo.message) return objectErrorOrNo;

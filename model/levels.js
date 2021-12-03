@@ -14,6 +14,22 @@ export const getAllLevels = async () => {
   }
 };
 
+export const getLevelByName = async (queryStringLevelName) => {
+  try {
+    const LIKEQueryStringLevelName = `%${queryStringLevelName}%`;
+    const [resultOfQueryWithLevel] = await connection.execute(`
+      SELECT * FROM dev_registration.levels
+      WHERE level LIKE ?;
+    `, [LIKEQueryStringLevelName]);
+    return resultOfQueryWithLevel;
+  } catch ({ sqlMessage, errno }) {
+    return {
+      status: errno,
+      message: sqlMessage,
+    };
+  }
+};
+
 export const createLevel = async (levelName) => {
   try {
     const [resultOfQuery] = await connection.execute(`
