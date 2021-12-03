@@ -1,10 +1,11 @@
 import connection from "./connection.js";
 
-export const getAllDevs = async () => {
+export const getAllDevs = async ({ limit, offset }) => {
   try {
     const [resultOfQueryWithAllDevs] = await connection.execute(`
-      SELECT * FROM dev_registration.devs;
-    `);
+      SELECT * FROM dev_registration.devs
+      LIMIT ? OFFSET ?;
+    `, [parseInt(limit), parseInt(offset)]);
 
     if (resultOfQueryWithAllDevs.length === 0) {
       return {
@@ -111,3 +112,18 @@ export const updateDev = async (devId, objInfoForUpdateADev) => {
     };
   }
 };
+
+export const howManyDevsAreThere = async () => {
+  try {
+    const [resultOfQuery] = await connection.execute(`
+      SELECT COUNT(*) AS total FROM dev_registration.devs;
+    `);
+
+    return resultOfQuery;
+  } catch ({ sqlMessage, errno }) {
+    return {
+      status: errno,
+      message: sqlMessage,
+    };
+  }
+}

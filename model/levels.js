@@ -94,8 +94,6 @@ export const updateLevel = async (levelId, objInfoForUpdateALevel) => {
       WHERE id = ?;
     `, [level, levelId]);
 
-    console.log(resultOfQuery);
-  
     if (resultOfQuery.affectedRows === 0) {
       return {
         status: 400,

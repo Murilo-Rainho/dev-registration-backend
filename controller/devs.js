@@ -13,17 +13,18 @@ import {
 // and a key 'message' with any description of error.
 
 export const getDevs = async (req, res, _next) => {
-  const { name } = req.query;
+  const { name, limit = 10, offset = 0 } = req.query;
 
-  const resultOfQueryWithDevs = (name) ? 
-    await servicesGetDevByName(name) : await servicesGetAllDevs();
+  const resultOfQueryWithDevs = (name) ?
+    await servicesGetDevByName(name) :
+    await servicesGetAllDevs({ limit, offset });
 
-  const { status, message, results } = resultOfQueryWithDevs;
+  const { status, message, ...response } = resultOfQueryWithDevs;
   if (message) {
-    return res.status(status).json({ message }).end();
+    return res.status(400).json({ message }).end();
   }
 
-  res.status(status).json({ results });
+  res.status(status).json({ ...response });
 };
 
 export const createDev = async (req, res, _next) => {

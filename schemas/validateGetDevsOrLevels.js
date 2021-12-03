@@ -1,7 +1,7 @@
 const validateGetDevsOrLevels = (resultOfQueryWithDevsOrLevels) => {
   if (resultOfQueryWithDevsOrLevels.message) {
-    const { message, status } = resultOfQueryWithDevsOrLevels;
-    return { message, status };
+    const { message } = resultOfQueryWithDevsOrLevels;
+    return { message, status: 400 };
   }
 
   return {};

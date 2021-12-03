@@ -10,6 +10,7 @@ import validateGetDevsOrLevels from "../schemas/validateGetDevsOrLevels.js";
 import validateInsertDevOrLevel from "../schemas/validateInsertDevOrLevel.js";
 import verifyDeleteDevOrLevel from "../schemas/verifyDeleteDevOrLevel.js";
 import verifyUpdateDevOrLevel from "../schemas/verifyUpdateDevOrLevel.js";
+import getPreviousAndNextPages from "../schemas/getPreviousAndNextPages.js";
 
 // The default return from validation functions is:
 // OK: Return an empty object;
@@ -21,13 +22,19 @@ import verifyUpdateDevOrLevel from "../schemas/verifyUpdateDevOrLevel.js";
 // ERROR: Return an object with a key 'status' with the status code
 // and a key 'message' with any description of error.
 
-export const getAllDevs = async () => {
-  const resultOfQueryWithAllDevs = await modelGetAllDevs();
+export const getAllDevs = async ({ limit, offset }) => {
+  const resultOfQueryWithAllDevs = await modelGetAllDevs({ limit, offset });
 
   const objectErrorOrNo = validateGetDevsOrLevels(resultOfQueryWithAllDevs);
   if (objectErrorOrNo.message) return objectErrorOrNo;
 
+  const { previousPage, nextPage } = await getPreviousAndNextPages({
+    limit: parseInt(limit), offset: parseInt(offset),
+  }, 'dev');
+
   return {
+    previousPage,
+    nextPage,
     results: resultOfQueryWithAllDevs,
     status: 200,
   };
