@@ -14,6 +14,23 @@ export const getAllDevs = async () => {
   }
 };
 
+export const getDevByName = async (queryStringDevName) => {
+  try {
+    const LIKEQueryStringDevName = `%${queryStringDevName}%`;
+    const [resultOfQueryWithDev] = await connection.execute(`
+      SELECT * FROM dev_registration.devs
+      WHERE name LIKE ?;
+    `, [LIKEQueryStringDevName]);
+    console.log(resultOfQueryWithDev);
+    return resultOfQueryWithDev;
+  } catch ({ sqlMessage, errno }) {
+    return {
+      status: errno,
+      message: sqlMessage,
+    };
+  }
+};
+
 export const createDev = async (objInfoForInsertADev) => {
   try {
     const { level, name, gender, birthday_date, age, hobby } = objInfoForInsertADev;

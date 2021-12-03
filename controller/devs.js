@@ -11,8 +11,9 @@ import {
 // ERROR: Return an object with a key 'status' with the status code
 // and a key 'message' with any description of error.
 
-export const getAllDevs = async (_req, res, _next) => {
-  const resultOfQueryWithAllDevs = await servicesGetAllDevs();
+export const getAllDevs = async (req, res, _next) => {
+  const { name } = req.query;
+  const resultOfQueryWithAllDevs = await servicesGetAllDevs(name);
 
   const { status, message, results } = resultOfQueryWithAllDevs;
   if (message) {
