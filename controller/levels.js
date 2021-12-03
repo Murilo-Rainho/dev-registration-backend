@@ -22,6 +22,7 @@ import {
 // and a key 'message' with any description of error.
 
 export const getLevels = async (req, res, _next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
   const { level, limit = 10, offset = 0 } = req.query;
 
   const resultOfQueryWithAllDevs = (level) ? 

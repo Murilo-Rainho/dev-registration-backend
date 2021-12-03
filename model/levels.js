@@ -3,8 +3,11 @@ import connection from "./connection.js";
 export const getAllLevels = async ({ limit, offset }) => {
   try {
     const [resultOfQueryWithAllLevels] = await connection.execute(`
-      SELECT * FROM dev_registration.levels
-      LIMIT ? OFFSET ?;
+      SELECT l.id, l.\`level\`, COUNT(d.\`name\`) devTotal
+      FROM dev_registration.levels l
+      LEFT JOIN dev_registration.devs d ON d.\`level\` = l.id
+      GROUP BY d.\`name\`, l.id, l.\`level\`
+      ORDER BY devTotal DESC LIMIT ? OFFSET ?;
     `, [parseInt(limit), parseInt(offset)]);
 
     if (resultOfQueryWithAllLevels.length === 0) {

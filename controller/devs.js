@@ -13,6 +13,7 @@ import {
 // and a key 'message' with any description of error.
 
 export const getDevs = async (req, res, _next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
   const { name, limit = 10, offset = 0 } = req.query;
 
   const resultOfQueryWithDevs = (name) ?
