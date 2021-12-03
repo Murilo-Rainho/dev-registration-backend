@@ -1,5 +1,6 @@
 import {
   getAllDevs as servicesGetAllDevs,
+  getDevByName as servicesGetDevByName,
   createDev as servicesCreateDev,
   deleteDev as servicesDeleteDev,
   updateDev as servicesUpdateDev,
@@ -11,11 +12,13 @@ import {
 // ERROR: Return an object with a key 'status' with the status code
 // and a key 'message' with any description of error.
 
-export const getAllDevs = async (req, res, _next) => {
+export const getDevs = async (req, res, _next) => {
   const { name } = req.query;
-  const resultOfQueryWithAllDevs = await servicesGetAllDevs(name);
 
-  const { status, message, results } = resultOfQueryWithAllDevs;
+  const resultOfQueryWithDevs = (name) ? 
+    await servicesGetDevByName(name) : await servicesGetAllDevs();
+
+  const { status, message, results } = resultOfQueryWithDevs;
   if (message) {
     return res.status(status).json({ message }).end();
   }

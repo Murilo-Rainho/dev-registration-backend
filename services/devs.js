@@ -6,7 +6,7 @@ import {
   getDevByName as modelGetDevByName,
 } from "../model/devs.js";
 
-import validateGetAllDevsOrLevels from "../schemas/validateGetAllDevsOrLevels.js";
+import validateGetDevsOrLevels from "../schemas/validateGetDevsOrLevels.js";
 import validateInsertDevOrLevel from "../schemas/validateInsertDevOrLevel.js";
 import verifyDeleteDevOrLevel from "../schemas/verifyDeleteDevOrLevel.js";
 import verifyUpdateDevOrLevel from "../schemas/verifyUpdateDevOrLevel.js";
@@ -21,22 +21,10 @@ import verifyUpdateDevOrLevel from "../schemas/verifyUpdateDevOrLevel.js";
 // ERROR: Return an object with a key 'status' with the status code
 // and a key 'message' with any description of error.
 
-export const getAllDevs = async (name) => {
-  if (name) {
-    const resultOfQueryWithDev = await modelGetDevByName(name);
-
-    const objectErrorOrNo = validateGetAllDevsOrLevels(resultOfQueryWithDev);
-    if (objectErrorOrNo.message) return objectErrorOrNo;
-
-    return {
-      results: resultOfQueryWithDev,
-      status: 200,
-    };
-  }
-
+export const getAllDevs = async () => {
   const resultOfQueryWithAllDevs = await modelGetAllDevs();
 
-  const objectErrorOrNo = validateGetAllDevsOrLevels(resultOfQueryWithAllDevs);
+  const objectErrorOrNo = validateGetDevsOrLevels(resultOfQueryWithAllDevs);
   if (objectErrorOrNo.message) return objectErrorOrNo;
 
   return {
@@ -44,6 +32,18 @@ export const getAllDevs = async (name) => {
     status: 200,
   };
 };
+
+export const getDevByName = async (name) => {
+  const resultOfQueryWithDev = await modelGetDevByName(name);
+
+  const objectErrorOrNo = validateGetDevsOrLevels(resultOfQueryWithDev);
+  if (objectErrorOrNo.message) return objectErrorOrNo;
+
+  return {
+    results: resultOfQueryWithDev,
+    status: 200,
+  };
+}
 
 export const createDev = async (objInfoForInsertADev) => {
   const resultOfQueryOfCreateADev = await modelCreateDev(objInfoForInsertADev);

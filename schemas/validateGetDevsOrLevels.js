@@ -1,4 +1,4 @@
-const validateGetAllDevsOrLevels = (resultOfQueryWithAllDevsOrLevels) => {
+const validateGetDevsOrLevels = (resultOfQueryWithAllDevsOrLevels) => {
   if (resultOfQueryWithAllDevsOrLevels.message) {
     const { message } = resultOfQueryWithAllDevsOrLevels;
     return { message, status: 400 };
@@ -6,4 +6,4 @@ const validateGetAllDevsOrLevels = (resultOfQueryWithAllDevsOrLevels) => {
   return {};
 };
 
-export default validateGetAllDevsOrLevels;
+export default validateGetDevsOrLevels;

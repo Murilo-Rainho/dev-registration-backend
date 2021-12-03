@@ -2,7 +2,7 @@ import express from 'express';
 
 import { config as dotenvConfig } from 'dotenv';
 
-import { getAllDevs, createDev, deleteDev, updateDev } from './controller/devs.js';
+import { getDevs, createDev, deleteDev, updateDev } from './controller/devs.js';
 import { getAllLevels, createLevel, deleteLevel, updateLevel } from './controller/levels.js';
 
 dotenvConfig();
@@ -13,7 +13,7 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 8080;
 
-app.get('/dev', getAllDevs);
+app.get('/dev', getDevs);
 app.get('/level', getAllLevels);
 
 app.post('/dev', createDev)

@@ -5,7 +5,7 @@ import {
   updateLevel as modelUpdateLevel,
 } from "../model/levels.js";
 
-import validateGetAllDevsOrLevels from "../schemas/validateGetAllDevsOrLevels.js";
+import validateGetDevsOrLevels from "../schemas/validateGetDevsOrLevels.js";
 import validateInsertDevOrLevel from "../schemas/validateInsertDevOrLevel.js";
 import verifyDeleteDevOrLevel from "../schemas/verifyDeleteDevOrLevel.js";
 import verifyUpdateDevOrLevel from "../schemas/verifyUpdateDevOrLevel.js";
@@ -24,7 +24,7 @@ import verifyUpdateDevOrLevel from "../schemas/verifyUpdateDevOrLevel.js";
 export const getAllLevels = async () => {
   const resultOfQueryWithAllDevs = await modelGetAllLevels();
 
-  const objectErrorOrNo = validateGetAllDevsOrLevels(resultOfQueryWithAllDevs);
+  const objectErrorOrNo = validateGetDevsOrLevels(resultOfQueryWithAllDevs);
   if (objectErrorOrNo.message) return objectErrorOrNo;
 
   return {

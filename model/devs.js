@@ -21,7 +21,6 @@ export const getDevByName = async (queryStringDevName) => {
       SELECT * FROM dev_registration.devs
       WHERE name LIKE ?;
     `, [LIKEQueryStringDevName]);
-    console.log(resultOfQueryWithDev);
     return resultOfQueryWithDev;
   } catch ({ sqlMessage, errno }) {
     return {
