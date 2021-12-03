@@ -51,3 +51,30 @@ export const deleteLevel = async (levelId) => {
     };
   }
 };
+
+export const updateLevel = async (levelId, objInfoForUpdateALevel) => {
+  try {
+    const { level } = objInfoForUpdateALevel;
+    
+    const [resultOfQuery] = await connection.execute(`
+      UPDATE dev_registration.levels
+      SET level = ?
+      WHERE id = ?;
+    `, [level, levelId]);
+
+    console.log(resultOfQuery);
+  
+    if (resultOfQuery.affectedRows === 0) {
+      return {
+        status: 400,
+        message: 'Has no level with this Id to be update.',
+      };
+    }
+    return resultOfQuery;
+  } catch ({ sqlMessage, errno }) {
+    return {
+      status: errno,
+      message: sqlMessage,
+    };
+  }
+};

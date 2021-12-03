@@ -2,6 +2,7 @@ import {
   getAllLevels as servicesGetAllLevels,
   createLevel as servicesCreateLevel,
   deleteLevel as servicesDeleteLevel,
+  updateLevel as servicesUpdateLevel,
 } from "../services/levels.js";
 
 // GET METHODS
@@ -47,4 +48,16 @@ export const deleteLevel = async (req, res, _next) => {
   if (message) return res.status(status).send({ message });
 
   res.status(204).send({ message: 'Level has been removed.' });
+};
+
+export const updateLevel = async (req, res, _next) => {
+  const { id: levelId } = req.params;
+  const { level } = req.body;
+
+  const resultOfQueryOfUpdateALevel = await servicesUpdateLevel(levelId, { level });
+
+  const { status, message } = resultOfQueryOfUpdateALevel;
+  if (message) return res.status(status).send({ message });
+
+  res.status(status).send({ message: 'Level has been updated.' });
 };

@@ -2,11 +2,13 @@ import {
   getAllLevels as modelGetAllLevels,
   createLevel as modelCreateLevel,
   deleteLevel as modelDeleteLevel,
+  updateLevel as modelUpdateLevel,
 } from "../model/levels.js";
 
 import validateGetAllDevsOrLevels from "../schemas/validateGetAllDevsOrLevels.js";
 import validateInsertDevOrLevel from "../schemas/validateInsertDevOrLevel.js";
 import verifyDeleteDevOrLevel from "../schemas/verifyDeleteDevOrLevel.js";
+import verifyUpdateDevOrLevel from "../schemas/verifyUpdateDevOrLevel.js";
 
 // The default return from validation functions is:
 // OK: Return an empty object;
@@ -51,4 +53,13 @@ export const deleteLevel = async (levelId) => {
   if (objectErrorOrNo.message) return objectErrorOrNo;
 
   return { status: 204 };
+};
+
+export const updateLevel = async (levelId, objInfoForUpdateALevel) => {
+  const resultOfQueryOfUpdateALevel = await modelUpdateLevel(levelId, objInfoForUpdateALevel);
+
+  const objectErrorOrNo = verifyUpdateDevOrLevel(resultOfQueryOfUpdateALevel);
+  if (objectErrorOrNo.message) return objectErrorOrNo;
+
+  return { status: 200 };
 };
