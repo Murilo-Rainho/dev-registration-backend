@@ -7,7 +7,7 @@ import { fileURLToPath } from 'url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 dotenvConfig({
-  path: path.resolve(__dirname, './.env'),
+  path: path.resolve(__dirname, '../.env'),
 });
 
 const connection = createPool({

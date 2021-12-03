@@ -5,6 +5,14 @@ export const getAllDevs = async () => {
     const [resultOfQueryWithAllDevs] = await connection.execute(`
       SELECT * FROM dev_registration.devs;
     `);
+
+    if (resultOfQueryWithAllDevs.length === 0) {
+      return {
+        status: 404,
+        message: 'There is no dev.',
+      };
+    }
+
     return resultOfQueryWithAllDevs;
   } catch ({ sqlMessage, errno }) {
     return {
@@ -21,6 +29,14 @@ export const getDevByName = async (queryStringDevName) => {
       SELECT * FROM dev_registration.devs
       WHERE name LIKE ?;
     `, [LIKEQueryStringDevName]);
+
+    if (resultOfQueryWithDev.length === 0) {
+      return {
+        status: 404,
+        message: 'There is no dev with that name.',
+      };
+    }
+
     return resultOfQueryWithDev;
   } catch ({ sqlMessage, errno }) {
     return {

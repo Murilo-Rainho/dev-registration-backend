@@ -5,6 +5,14 @@ export const getAllLevels = async () => {
     const [resultOfQueryWithAllLevels] = await connection.execute(`
       SELECT * FROM dev_registration.levels;
     `);
+
+    if (resultOfQueryWithAllLevels.length === 0) {
+      return {
+        status: 404,
+        message: 'There is no level.',
+      };
+    }
+
     return resultOfQueryWithAllLevels;
   } catch ({ sqlMessage, errno }) {
     return {
@@ -21,6 +29,14 @@ export const getLevelByName = async (queryStringLevelName) => {
       SELECT * FROM dev_registration.levels
       WHERE level LIKE ?;
     `, [LIKEQueryStringLevelName]);
+
+    if (resultOfQueryWithLevel.length === 0) {
+      return {
+        status: 404,
+        message: 'There is no level with that name.',
+      };
+    }
+
     return resultOfQueryWithLevel;
   } catch ({ sqlMessage, errno }) {
     return {
