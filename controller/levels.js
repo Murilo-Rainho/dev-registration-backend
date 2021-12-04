@@ -36,6 +36,7 @@ export const getLevels = async (req, res, _next) => {
 };
 
 export const createLevel = async (req, res, _next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
   const { levelName } = req.body;
   const resultOfQueryOfCreateALevel = await servicesCreateLevel(levelName);
 
@@ -46,6 +47,7 @@ export const createLevel = async (req, res, _next) => {
 };
 
 export const deleteLevel = async (req, res, _next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
   const { id: levelId } = req.params;
 
   const resultOfQueryOfDeleteALevel = await servicesDeleteLevel(levelId);
@@ -57,6 +59,7 @@ export const deleteLevel = async (req, res, _next) => {
 };
 
 export const updateLevel = async (req, res, _next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
   const { id: levelId } = req.params;
   const { level } = req.body;
 
