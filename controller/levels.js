@@ -22,7 +22,6 @@ import {
 // and a key 'message' with any description of error.
 
 export const getLevels = async (req, res, _next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
   const { level, limit = 10, offset = 0 } = req.query;
 
   const resultOfQueryWithAllDevs = (level) ? 
@@ -36,7 +35,6 @@ export const getLevels = async (req, res, _next) => {
 };
 
 export const createLevel = async (req, res, _next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
   const { levelName } = req.body;
   const resultOfQueryOfCreateALevel = await servicesCreateLevel(levelName);
 
@@ -47,26 +45,24 @@ export const createLevel = async (req, res, _next) => {
 };
 
 export const deleteLevel = async (req, res, _next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
   const { id: levelId } = req.params;
 
   const resultOfQueryOfDeleteALevel = await servicesDeleteLevel(levelId);
 
   const { status, message } = resultOfQueryOfDeleteALevel;
-  if (message) return res.status(status).send({ message });
+  if (message) return res.status(status).json({ message });
 
-  res.status(204).send({ message: 'Level has been removed.' });
+  res.status(status).json({ message: 'Level has been removed.' });
 };
 
 export const updateLevel = async (req, res, _next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
   const { id: levelId } = req.params;
   const { level } = req.body;
 
   const resultOfQueryOfUpdateALevel = await servicesUpdateLevel(levelId, { level });
 
   const { status, message } = resultOfQueryOfUpdateALevel;
-  if (message) return res.status(status).send({ message });
+  if (message) return res.status(status).json({ message });
 
-  res.status(status).send({ message: 'Level has been updated.' });
+  res.status(status).json({ message: 'Level has been updated.' });
 };

@@ -81,6 +81,7 @@ export const deleteLevel = async (levelId) => {
 
     return resultOfQuery;
   } catch ({ sqlMessage, errno }) {
+    console.log(errno);
     return {
       status: errno,
       message: sqlMessage,
