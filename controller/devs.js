@@ -29,6 +29,7 @@ export const getDevs = async (req, res, _next) => {
 };
 
 export const createDev = async (req, res, _next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
   const { level, name, gender, birthday_date, age, hobby } = req.body;
   const resultOfQueryOfCreateADev = await servicesCreateDev({
     level, name, gender, birthday_date, age, hobby,
@@ -41,6 +42,7 @@ export const createDev = async (req, res, _next) => {
 };
 
 export const deleteDev = async (req, res, _next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
   const { id: devId } = req.params;
 
   const resultOfQueryOfDeleteADev = await servicesDeleteDev(devId);
@@ -52,6 +54,7 @@ export const deleteDev = async (req, res, _next) => {
 };
 
 export const updateDev = async (req, res, _next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
   const { id: devId } = req.params;
   const { level, name, gender, birthday_date, age, hobby } = req.body;
 
