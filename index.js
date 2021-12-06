@@ -15,6 +15,12 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 8080;
 
+app.use(function(_req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 app.get('/', (_req, res, _next) => {
   const levelGetUrl = 'https://dev-registration-backend.herokuapp.com/level';
   const devGetUrl = 'https://dev-registration-backend.herokuapp.com/dev';
