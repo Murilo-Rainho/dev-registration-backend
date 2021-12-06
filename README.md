@@ -1,5 +1,11 @@
 # Dev-registration-backend
 
+---
+
+### The heroku's frontend has problems accessing heroku backend. I'm working on it ;)
+
+---
+
 ## About
 
 > This app is a simple example of a backend with node js and express. It has CRUD and MSC architecture (Model, Services and Controller).
