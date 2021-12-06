@@ -3,7 +3,7 @@ import connection from "./connection.js";
 export const getAllDevs = async ({ limit, offset }) => {
   try {
     const [resultOfQueryWithAllDevs] = await connection.execute(`
-      SELECT * FROM dev_registration.devs
+      SELECT * FROM devs
       LIMIT ? OFFSET ?;
     `, [parseInt(limit), parseInt(offset)]);
 
@@ -27,7 +27,7 @@ export const getDevByName = async (queryStringDevName) => {
   try {
     const LIKEQueryStringDevName = `%${queryStringDevName}%`;
     const [resultOfQueryWithDev] = await connection.execute(`
-      SELECT * FROM dev_registration.devs
+      SELECT * FROM devs
       WHERE name LIKE ?;
     `, [LIKEQueryStringDevName]);
 
@@ -51,7 +51,7 @@ export const createDev = async (objInfoForInsertADev) => {
   try {
     const { level, name, gender, birthday_date, age, hobby } = objInfoForInsertADev;
     const [resultOfQuery] = await connection.execute(`
-      INSERT INTO dev_registration.devs
+      INSERT INTO devs
       (\`level\`, \`name\`, gender, birthday_date, age, hobby)
       VALUES (?, ?, ?, ?, ?, ?);
     `, [level, name, gender, birthday_date, age, hobby]);
@@ -67,7 +67,7 @@ export const createDev = async (objInfoForInsertADev) => {
 export const deleteDev = async (devId) => {
   try {
     const [resultOfQuery] = await connection.execute(`
-      DELETE FROM dev_registration.devs
+      DELETE FROM devs
       WHERE id = ?;
     `, [devId]);
 
@@ -92,7 +92,7 @@ export const updateDev = async (devId, objInfoForUpdateADev) => {
     const { level, name, gender, birthday_date, age, hobby } = objInfoForUpdateADev;
     
     const [resultOfQuery] = await connection.execute(`
-      UPDATE dev_registration.devs
+      UPDATE devs
       SET level = ?, \`name\` = ?, gender = ?,
       birthday_date = ?, age = ?, hobby = ?
       WHERE id = ?;
@@ -116,7 +116,7 @@ export const updateDev = async (devId, objInfoForUpdateADev) => {
 export const howManyDevsAreThere = async () => {
   try {
     const [resultOfQuery] = await connection.execute(`
-      SELECT COUNT(*) AS total FROM dev_registration.devs;
+      SELECT COUNT(*) AS total FROM devs;
     `);
 
     return resultOfQuery;

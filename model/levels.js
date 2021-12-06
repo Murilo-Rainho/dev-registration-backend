@@ -4,8 +4,8 @@ export const getAllLevels = async ({ limit, offset }) => {
   try {
     const [resultOfQueryWithAllLevels] = await connection.execute(`
       SELECT l.id, l.\`level\`, COUNT(d.\`name\`) devTotal
-      FROM dev_registration.levels l
-      LEFT JOIN dev_registration.devs d ON d.\`level\` = l.id
+      FROM levels l
+      LEFT JOIN devs d ON d.\`level\` = l.id
       GROUP BY d.\`name\`, l.id, l.\`level\`
       ORDER BY devTotal DESC LIMIT ? OFFSET ?;
     `, [parseInt(limit), parseInt(offset)]);
@@ -30,7 +30,7 @@ export const getLevelByName = async (queryStringLevelName) => {
   try {
     const LIKEQueryStringLevelName = `%${queryStringLevelName}%`;
     const [resultOfQueryWithLevel] = await connection.execute(`
-      SELECT * FROM dev_registration.levels
+      SELECT * FROM levels
       WHERE level LIKE ?;
     `, [LIKEQueryStringLevelName]);
 
@@ -53,7 +53,7 @@ export const getLevelByName = async (queryStringLevelName) => {
 export const createLevel = async (levelName) => {
   try {
     const [resultOfQuery] = await connection.execute(`
-      INSERT INTO dev_registration.levels
+      INSERT INTO levels
       (\`level\`) VALUES (?);
     `, [levelName]);
     return resultOfQuery;
@@ -68,7 +68,7 @@ export const createLevel = async (levelName) => {
 export const deleteLevel = async (levelId) => {
   try {
     const [resultOfQuery] = await connection.execute(`
-      DELETE FROM dev_registration.levels
+      DELETE FROM levels
       WHERE id = ?;
     `, [levelId]);
 
@@ -94,7 +94,7 @@ export const updateLevel = async (levelId, objInfoForUpdateALevel) => {
     const { level } = objInfoForUpdateALevel;
     
     const [resultOfQuery] = await connection.execute(`
-      UPDATE dev_registration.levels
+      UPDATE levels
       SET level = ?
       WHERE id = ?;
     `, [level, levelId]);
@@ -117,7 +117,7 @@ export const updateLevel = async (levelId, objInfoForUpdateALevel) => {
 export const howManyLevelsAreThere = async () => {
   try {
     const [resultOfQuery] = await connection.execute(`
-      SELECT COUNT(*) AS total FROM dev_registration.levels;
+      SELECT COUNT(*) AS total FROM levels;
     `);
 
     return resultOfQuery;
