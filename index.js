@@ -15,6 +15,14 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 8080;
 
+app.get('/', (_req, res, _next) => {
+  const levelGetUrl = 'https://dev-registration-backend.herokuapp.com/level';
+  const devGetUrl = 'https://dev-registration-backend.herokuapp.com/dev';
+  const message = 'This is the root of backend! Try a Get, Post, Put or Delete (WARNING) in any routes down'
+
+  res.status(200).json({ message, devGetUrl, levelGetUrl });
+});
+
 app.get('/dev', getDevs);
 app.get('/level', getLevels);
 
