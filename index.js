@@ -26,7 +26,7 @@ app.get('/', (_req, res, _next) => {
   const devGetUrl = 'https://dev-registration-backend.herokuapp.com/dev';
   const message = 'This is the root of backend! Try a Get, Post, Put or Delete (WARNING) in any routes down'
 
-  res.status(200).json({ message, devGetUrl, levelGetUrl });
+  res.status(200).json({ message, devGetUrl, levelGetUrl, port: PORT });
 });
 
 app.get('/dev', getDevs);
